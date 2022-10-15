@@ -26,23 +26,28 @@ copy "nrfsdk5/examples/ble_peripheral/ble_app_blinky" to "nrfsdk5/examples/hc42-
 change directory to "nrfsdk5/examples/hc42-test/ble_app_blinky"
 
 open "nrfsdk5/examples/hc42-test/ble_app_blinky/pca10040/s132/ses/ble_app_blinky_pca10040_s132.emProject"
-right click "Project name" in the "Project Explorer" window, and choose Option
+right click "Project name" in the "Project Explorer" window, and choose "Option"
 Change "Debug" to "Common" on the top left.
 Choose "Code > Preprocessor > Preprocessor Definitions", click the triple dot
 change from "BOARD_PCA10040" to "BOARD_HC42"
 Click OK button
 
+Section placement setup
 right click "Project name" in the "Project Explorer" window, and choose "Edit Section placement"
 remove the "size="0x4" in <ProgramSection alignment="4" load="Yes" name=".text" size="0x4" />
 remove the "size="0x4" in <ProgramSection alignment="4" load="Yes" name=".rodata" size="0x4" />
-save
+
+save and close the file
 
 edit "Application/sdk_config.h"
-find "SoftDevice clock configuration" around line 11800th.
-change "#define NRF_SDH_CLOCK_LF_SRC 1" to "#define NRF_SDH_CLOCK_LF_SRC 0"
-change "#define NRF_SDH_CLOCK_LF_RC_CTIV 0" to "#define NRF_SDH_CLOCK_LF_RC_CTIV 4"
-"#define NRF_SDH_CLOCK_LF_RC_TEMP_CTIV 1" to "#define NRF_SDH_CLOCK_LF_RC_TEMP_CTIV 0"
-save
+find "SoftDevice clock configuration" around line 11800th line.
+change to: 
+
+NRF_SDH_CLOCK_LF_SRC 0
+NRF_SDH_CLOCK_LF_RC_CTIV 4
+NRF_SDH_CLOCK_LF_RC_TEMP_CTIV 0
+
+save and close the file
 
 open main.c:
 //#define ADVERTISING_LED                 BSP_BOARD_LED_0                         /**< Is on when device is advertising. */
@@ -52,4 +57,11 @@ open main.c:
 
 and comment out all the "ADVERTISING_LED" and "CONNECTED_LED" occurence in main.c, since it is not defined.
 
-Done. just build it with confidence.
+save main.c
+
+press F7
+connect -- ctrl TC
+erase all -- ctrl TK
+download -- ctrl TL
+
+
